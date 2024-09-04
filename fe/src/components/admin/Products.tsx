@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { ALL_PRODUCTS } from "../../queries/queries";
 import { Product } from "../../types";
+import ProductForm from "./ProductForm";
 
 interface ProductProps{
     product: Product
@@ -31,7 +32,10 @@ const Products = () => {
             <h1>Products</h1>
             <button>Add Product</button>
 
-            <div>
+            <ProductForm/>
+
+            <div>                
+                <h1>All products</h1>
                 {products.map((p: Product) => 
                     <ProductComponent key = {p.id} product={p}/>
                 )}

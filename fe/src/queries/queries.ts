@@ -46,6 +46,22 @@ export const PRODUCT_COUNT = gql`
     
 `
 
+export const CREATE_PRODUCT = gql`
+    mutation createProduct($name: String!, $description: String!, $priceInCents: Int!, $isAvailableForPurchase: Boolean!){
+        createProduct(
+            name: $name,
+            description: $description,
+            priceInCents: $priceInCents, 
+            isAvailableForPurchase: $isAvailableForPurchase
+        ){
+            name
+            description
+            priceInCents
+            isAvailableForPurchase
+        }
+    }
+`
+
 export const ALL_ORDERS = gql `
     query{
         allOrders {
