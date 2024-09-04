@@ -6,6 +6,7 @@ import Users from "./Users";
 import Orders from "./Orders";
 
 const AdminPage = () => {
+
     return(
         <>
             <Layout/>
