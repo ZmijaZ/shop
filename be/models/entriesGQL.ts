@@ -8,6 +8,7 @@ const typeDefs = `
         email: String!
         createdAt: Date
         updatedAt: Date
+        orders: [Order]
         id: ID!
     }
 

@@ -19,7 +19,13 @@ const schema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    updatedAt: Date
+    updatedAt: Date,
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Order'
+        }
+    ]
 })
 
 schema.set('toJSON', {

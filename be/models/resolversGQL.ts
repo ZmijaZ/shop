@@ -8,7 +8,8 @@ import Order from "./order";
 const resolvers = {
     Query: {
         allUsers: async () => {
-            let resultUsers = await User.find({});
+            let resultUsers = await User.find({})
+                .populate('orders');
             
             return resultUsers;
         },
@@ -22,7 +23,6 @@ const resolvers = {
                 .populate('user')
                 .populate('products');
 
-            console.log(resultOrders);
 
             return resultOrders;
         }
@@ -76,6 +76,11 @@ const resolvers = {
 
             try{
                 await order.save();
+               
+                await User.updateOne(
+                    {username: args.user},
+                    {$push: {orders: order}}    
+                )
             } catch (error) {
                 throw new GraphQLError('Creating an order failed', {
                     extensions: {
