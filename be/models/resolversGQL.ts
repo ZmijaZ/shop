@@ -1,5 +1,7 @@
 import { GraphQLError } from "graphql";
 import User from "./user"
+import Product from "./product";
+
 import bcrypt from 'bcryptjs'
 
 const resolvers = {
@@ -8,16 +10,21 @@ const resolvers = {
             let resultUsers = await User.find({});
             
             return resultUsers;
+        },
+        allProducts: async () => {
+            let resultProducts = await Product.find({});
+
+            return resultProducts;
         }
     },
     Mutation: {
-        createUser: async (_root, _args) => {
-            const {username, name, password} = _args;
+        createUser: async (_root, args) => {
+            const {username, name, email, password} = args;
 
             const saltRounds = 10;
             const passwordHash = await bcrypt.hash(password, saltRounds);
 
-            const user = new User({username, name, passwordHash});
+            const user = new User({username, name, email, passwordHash});
             
             try{
                 await user.save();
@@ -25,12 +32,27 @@ const resolvers = {
                 throw new GraphQLError('Creating the user failed', {
                     extensions: {
                         code: 'BAD_USER_INPUT',
-                        invalidArgs: _args.name,
+                        invalidArgs: args.name,
                         error
                     }
                 });
             }
             return user;
+        },
+        createProduct: async (_root, args) => {
+            const product = new Product({...args});
+            try{
+                await product.save();
+            } catch (error) {
+                throw new GraphQLError('Creating a product failed', {
+                    extensions: {
+                        code: 'BAD_USER_INPUT',
+                        invalidArgs: args.name,
+                        error
+                    }
+                })
+            }
+            return product;
         }
     }
 }

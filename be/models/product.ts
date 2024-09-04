@@ -1,20 +1,21 @@
 import mongoose from 'mongoose';
 
 const schema = new mongoose.Schema({
-    username: {
+    name: {
         type: String,
-        required: true,
-        unique: true,
-        minLength: 3
+        required: true
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        minLength: 3, //TODO set valid regex for email  
+    priceInCents: {
+        type: Number,
+        required: true
     },
-    name: String,
-    passwordHash: String,
+    filePath: String,
+    imagePath: String,
+    description: String,
+    isAvailableForPurchase: {
+        type: Boolean,
+        default: true
+    },
     createdAt:{ 
         type: Date,
         default: Date.now
@@ -33,4 +34,4 @@ schema.set('toJSON', {
 })
 
 
-export default mongoose.model('User', schema)
+export default mongoose.model('Product', schema)
