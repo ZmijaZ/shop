@@ -13,10 +13,40 @@ const resolvers = {
             
             return resultUsers;
         },
+        userCount: async () => User.collection.countDocuments(),
         allProducts: async () => {
             let resultProducts = await Product.find({});
 
             return resultProducts;
+        },
+        averageCustomerSpending: async () => {
+            const users = await User.find({}).populate('orders');
+            const userOrders = users.map(u => u.orders);
+
+            let res : number = 0;
+            //TODO rewrite this!
+            for(let i = 0; i < userOrders.length; i++){
+               for(let j = 0; j < userOrders[i].length; j++){
+                    res += userOrders[i][j]['pricePaidInCents']; 
+               }
+            }
+            
+            return Math.round(res/users.length);
+        },
+        productCount: async (_root, args) => {
+            let res : number = 0;
+
+            console.log(args);
+
+            if(args){
+                res = await Product.collection.countDocuments({isAvailableForPurchase:args.active});
+            };
+            
+            if(!res)
+                res = await Product.collection.countDocuments();
+            
+
+            return res;
         },
         allOrders: async () => {
             let resultOrders = await Order.find({})
@@ -25,6 +55,11 @@ const resolvers = {
 
 
             return resultOrders;
+        },
+        orderCount: async () => Order.collection.countDocuments(),
+        totalOrderPrice: async () => {
+            const allOrders = await Order.find();
+            return allOrders.reduce((acc, curr) => acc + curr.pricePaidInCents, 0)
         }
     },
     Mutation: {

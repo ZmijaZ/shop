@@ -34,8 +34,13 @@ const typeDefs = `
 
     type Query {
         allUsers: [User!]!
+        userCount: Int!
+        averageCustomerSpending: Int!
         allProducts: [Product!]!
+        productCount (active: Boolean): Int!
         allOrders: [Order!]!
+        orderCount: Int!
+        totalOrderPrice: Int!
     }
 
     type Mutation {
