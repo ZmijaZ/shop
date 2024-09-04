@@ -1,10 +1,10 @@
-
+import AdminPage from "./components/admin/AdminPage"
 
 function App() {
 
   return (
     <>
-      123
+      <AdminPage/>
     </>
   )
 }
