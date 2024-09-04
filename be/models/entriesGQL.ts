@@ -64,4 +64,6 @@ const typeDefs = `
     }
 `;
 
+
+//TODO add downloadVerification (maybe?!)
 export default typeDefs;

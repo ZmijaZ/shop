@@ -21,6 +21,7 @@ const schema = new mongoose.Schema({
         default: Date.now
     },
     updatedAt: Date
+    //TODO add orders (maybe?!)
 })
 
 schema.set('toJSON', {
