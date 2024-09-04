@@ -29,6 +29,7 @@ export const USERS_AVERAGE_SPENT = gql`
 export const ALL_PRODUCTS = gql`
     query{
         allProducts{
+            id
             name
             priceInCents
             description

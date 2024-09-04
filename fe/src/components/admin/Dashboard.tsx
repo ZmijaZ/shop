@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { ORDER_COUNT, PRODUCT_COUNT, TOTAL_ORDER_PRICE, USERS_AVERAGE_SPENT } from "../../graphQl/queries";
+import { ORDER_COUNT, PRODUCT_COUNT, TOTAL_ORDER_PRICE, USERS_AVERAGE_SPENT } from "../../queries/queries";
 
 const Dashboard = () => {
     const numberOfOrdersResult = useQuery(ORDER_COUNT);

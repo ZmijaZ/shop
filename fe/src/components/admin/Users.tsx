@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { ALL_USERS } from "../../graphQl/queries";
+import { ALL_USERS } from "../../queries/queries";
 
 const Users = () => {
 
