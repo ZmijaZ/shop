@@ -3,6 +3,7 @@ import User from "./user"
 import Product from "./product";
 
 import bcrypt from 'bcryptjs'
+import Order from "./order";
 
 const resolvers = {
     Query: {
@@ -15,6 +16,15 @@ const resolvers = {
             let resultProducts = await Product.find({});
 
             return resultProducts;
+        },
+        allOrders: async () => {
+            let resultOrders = await Order.find({})
+                .populate('user')
+                .populate('products');
+
+            console.log(resultOrders);
+
+            return resultOrders;
         }
     },
     Mutation: {
@@ -53,6 +63,29 @@ const resolvers = {
                 })
             }
             return product;
+        },
+        createOrder: async (_root, args) => {
+            const user = await User.findOne({username: args.user});
+            const products = await Product.find({name: {$in: args.products}});
+
+            const order = new Order({
+                ...args,
+                user,
+                products,
+            });
+
+            try{
+                await order.save();
+            } catch (error) {
+                throw new GraphQLError('Creating an order failed', {
+                    extensions: {
+                        code: 'BAD_USER_INPUT',
+                        invalidArgs: args.name,
+                        error
+                    }
+                })
+            }
+            return order;
         }
     }
 }

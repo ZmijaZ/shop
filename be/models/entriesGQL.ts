@@ -23,9 +23,18 @@ const typeDefs = `
         id: ID!
     }
 
+    type Order{
+        pricePaidInCents: Int!
+        createdAt: Date!
+        updatedAt: Date
+        user: User!
+        products: [Product!]!
+    }
+
     type Query {
         allUsers: [User!]!
         allProducts: [Product!]!
+        allOrders: [Order!]!
     }
 
     type Mutation {
@@ -44,6 +53,13 @@ const typeDefs = `
             description: String
             isAvailableForPurchase: Boolean
         ): Product
+
+        createOrder(
+            pricePaidInCents: Int!
+            updatedAt: Date
+            user: String!
+            products: [String!]!
+        ): Order
     }
 `;
 
